@@ -1,18 +1,33 @@
 ## cacheSolve and makeCacheMatrix are helpers to help you boost your
-## performances when doing any repeated matrix solve operations.
-## To be able to use the matrix cache, you have to 'prepare' your matrix
-## by wrapping it in an helper list, using the `makeCacheMatrix` function.
-## Then you can provide this wrapped-in-a-list matrix to the cacheSolve
-## function.
-## The cacheSolve function will automatically get/set cache the value in
-## the warpper object.
-##
+#  performances when doing any repeated matrix solve operations.
+#  To be able to use the matrix cache, you have to 'prepare' your matrix
+#  by wrapping it in an helper list, using the `makeCacheMatrix` function.
+#  Then you can provide this wrapped-in-a-list matrix to the cacheSolve
+#  function.
+#  The cacheSolve function will automatically get/set cache the value in
+#  the warpper object.
+#
 ## Memory considerations
-## Please keep in mind that the list returned by makeCacheMatrix is heavier
-## than the native matrix, and will store the solved matrix. Therefore you
-## should take car or dispose this objects as soon as you won't need the
-## matrix not the cache any longer.
-
+#  Please keep in mind that the list returned by makeCacheMatrix is heavier
+#  than the native matrix, and will store the solved matrix. Therefore you
+#  should take car or dispose this objects as soon as you won't need the
+#  matrix not the cache any longer.
+#
+## Sample use:
+#    > my.matrix <- matrix(rnorm(9), nrow = 3, ncol = 3)
+#    > my.cacheable.matrix <- makeCacheMatrix(my.matrix)
+#    > cacheSolve(my.cacheable.matrix)
+#                [,1]      [,2]      [,3]
+#    [1,] -0.53118845 -1.294381 -2.563833
+#    [2,] -0.02777355  1.630399  1.244785
+#    [3,]  1.00221610  1.918431  2.804427
+#
+#    > cacheSolve(my.cacheable.matrix)
+#    Getting cached solve value
+#                [,1]      [,2]      [,3]
+#    [1,] -0.53118845 -1.294381 -2.563833
+#    [2,] -0.02777355  1.630399  1.244785
+#    [3,]  1.00221610  1.918431  2.804427
 
 
 ## makeCacheMatrix create a special list wrapping a given matrix.
@@ -26,8 +41,6 @@
 # Returns:
 #   A list object wrapping the matrix provided as argument, that can be used
 #   by the cacheSolve function.
-
-
 makeCacheMatrix <- function(x = matrix()) {
 
     # Scope-variable for the function that we are going to create
@@ -54,18 +67,37 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Return a matrix that is the inverse of 'x'
-
+## Return a matrix that is the inverse of 'x'.
+# x must be a special matrix prepared for cachability by the
+# makeCacheMatrix function.
+#
+# Args:
+#   x: a list wrapping the matrix, as provided by the makeCacheMatrix function
+#
+# Returns:
+#   The solved matrix
+#   (either read from cache, or computed then stored in cache)
 cacheSolve <- function(x, ...) {
+    # Error handling
+    if (!is.list(x)) {
+        stop("cacheSolve input must by a list provided by makeCacheMatrix.")
+    }
+    # We might also do more input-checks like
+    # ((names(x) != NULL)
+    #  & (grep("^get$|^set$|^getSolve$|^setSolve$", names(x)) != c(1,2,3,4)))
+    # But the goal of a cache routine is to save on performance, therefore
+    # for this implementation we will just keep the basic list checking above,
+    # useful as a reminder when performing some command ine exploratory work.
 
     cached.solve <- x$getSolve()
     if(!is.null(cached.solve)) {
         message("Getting cached solve value")
         return(cached.solve)
     }
-    # No solve result found in cache, compute it then save it
+    # No solved result found in cache, compute it then save it
     data <- x$get()
     cached.solve <- solve(data, ...)
     x$setSolve(cached.solve)
+
     cached.solve
 }
