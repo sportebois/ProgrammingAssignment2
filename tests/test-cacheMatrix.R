@@ -5,7 +5,7 @@ source('cachematrix.R')
 runTest <- function () {
 
     # Create a random Matrix on which we wil run our test
-    test.dim = floor(3+3*runif(1)) # Use random dimension on every test run
+    test.dim <- floor(3+3*runif(1)) # Use random dimension on every test run
     test.matrix <- matrix(rnorm(test.dim ^ 2),
                           nrow = test.dim, ncol = test.dim)
 
