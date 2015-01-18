@@ -99,5 +99,5 @@ cacheSolve <- function(x, ...) {
     cached.solve <- solve(data, ...) # compute the solve on the matrix
     x$setSolve(cached.solve) # and store the result in the cache
 
-    cached.solve
+    cached.solve # return the computed solve result
 }
