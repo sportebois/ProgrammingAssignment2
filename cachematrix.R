@@ -1,17 +1,16 @@
 ## cacheSolve and makeCacheMatrix are helpers to help you boost your
 #  performances when doing any repeated matrix solve operations.
-#  To be able to use the matrix cache, you have to 'prepare' your matrix
-#  by wrapping it in an helper list, using the `makeCacheMatrix` function.
-#  Then you can provide this wrapped-in-a-list matrix to the cacheSolve
-#  function.
-#  The cacheSolve function will automatically get/set cache the value in
-#  the warpper object.
+#  To be able to use the matrix cache, you have to 'prepare' your matrix by
+#  wrapping it in an helper list, using the `makeCacheMatrix` function.
+#  Then you can provide this wrapped-in-a-list matrix to the cacheSolve function.
+#  The cacheSolve function will automatically get/set cache the value in the
+#  warpper object.
 #
 ## Memory considerations
-#  Please keep in mind that the list returned by makeCacheMatrix is heavier
-#  than the native matrix, and will store the solved matrix. Therefore you
-#  should take car or dispose this objects as soon as you won't need the
-#  matrix not the cache any longer.
+#  Please keep in mind that the list returned by makeCacheMatrix is heavier than
+#  the native matrix, and will store the solved matrix. Therefore you should
+#  take car or dispose this objects as soon as you won't need the matrix not the
+#  cache any longer.
 #
 ## Sample use:
 #    > my.matrix <- matrix(rnorm(9), nrow = 3, ncol = 3)
@@ -30,11 +29,11 @@
 #    [3,]  1.00221610  1.918431  2.804427
 #
 ## Compliance tests (using testthat library for assertion)
-#  The file 'tests//test-cacheMatrix.R' contains tests to check that the
-#  results return by cacheSolve match results return by native solve
-#  function. To run these tests, you just have to source
-#  test-cacheMatrix.R file, (assuming you have testthat package installed)
-#  then simply run  testacheSolve() to run the tests.
+#  The file 'tests//test-cacheMatrix.R' contains tests to check that the results
+#  return by cacheSolve match results return by native solve function. To run
+#  these tests, you just have to source test-cacheMatrix.R file, (assuming you
+#  have testthat package installed) then simply run  testacheSolve() to run the
+#  tests.
 
 
 ## makeCacheMatrix create a special list wrapping a given matrix.
@@ -75,8 +74,8 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 ## Return a matrix that is the inverse of 'x'.
-# x must be a special matrix prepared for cachability by the
-# makeCacheMatrix function.
+#  x must be a special matrix prepared for cachability by the makeCacheMatrix
+#  function.
 #
 # Args:
 #   x: a list wrapping the matrix, as provided by the makeCacheMatrix function
