@@ -28,6 +28,13 @@
 #    [1,] -0.53118845 -1.294381 -2.563833
 #    [2,] -0.02777355  1.630399  1.244785
 #    [3,]  1.00221610  1.918431  2.804427
+#
+## Compliance tests (using testthat library for assertion)
+#  The file 'tests//test-cacheMatrix.R' contains tests to check that the
+#  results return by cacheSolve match results return by native solve
+#  function. To run these tests, you just have to source
+#  test-cacheMatrix.R file, (assuming you have testthat package installed)
+#  then simply run  testacheSolve() to run the tests.
 
 
 ## makeCacheMatrix create a special list wrapping a given matrix.
@@ -95,9 +102,9 @@ cacheSolve <- function(x, ...) {
         return(cached.solve)
     }
     # No solved result found in cache, compute it then save it
-    data <- x$get()
-    cached.solve <- solve(data, ...)
-    x$setSolve(cached.solve)
+    data <- x$get() # Get the matrix from the wrapper
+    cached.solve <- solve(data, ...) # compute the solve on the matrix
+    x$setSolve(cached.solve) # and store the result in the cache
 
     cached.solve
 }

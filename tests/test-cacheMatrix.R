@@ -2,7 +2,7 @@
 library(testthat)
 source('cachematrix.R')
 
-runTest <- function () {
+testacheSolve <- function () {
 
     # Create a random Matrix on which we wil run our test
     test.dim <- floor(3+3*runif(1)) # Use random dimension on every test run
