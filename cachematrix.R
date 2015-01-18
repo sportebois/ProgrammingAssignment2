@@ -89,12 +89,6 @@ cacheSolve <- function(x, ...) {
     if (!is.list(x)) {
         stop("cacheSolve input must by a list provided by makeCacheMatrix.")
     }
-    # We might also do more input-checks like
-    # ((names(x) != NULL)
-    #  & (grep("^get$|^set$|^getSolve$|^setSolve$", names(x)) != c(1,2,3,4)))
-    # But the goal of a cache routine is to save on performance, therefore
-    # for this implementation we will just keep the basic list checking above,
-    # useful as a reminder when performing some command ine exploratory work.
 
     cached.solve <- x$getSolve()
     if(!is.null(cached.solve)) {
